@@ -8,11 +8,11 @@ unified interface between various projects on various platforms and environments
 
 ### Supported Functions
 
-* *crop* : crop an image
-* *scale* : scale an image to a new height and width.
-* *scale2h* : scale an image to a new height while preserving the aspect ratio
-* *scale2w* : scale an image to a new width while preserving the aspect ratio
-* *thumbnail* : create a thumbnail with specified dimensions, zooming and cropping.
+* **crop** : crop an image
+* **scale** : scale an image to a new height and width.
+* **scale2h** : scale an image to a new height while preserving the aspect ratio
+* **scale2w** : scale an image to a new width while preserving the aspect ratio
+* **thumbnail** : create a thumbnail with specified dimensions, zooming and cropping.
 * ... more coming...
 
 ----------------------
