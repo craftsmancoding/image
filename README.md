@@ -154,9 +154,9 @@ Becomes horizontally centered:
     $dst = '/path/to/tall.thumb.jpg';
     \Craftsmancoding\Image::thumbnail($src,$dst,200,200);
 
-![Tall Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.jpg?raw=true "Wide Image")
+![Tall Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/C.jpg?raw=true "Wide Image")
 
 Becomes vertically centered:
 
-![Thumbnail](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.expected_thumb.jpg?raw=true "Thumbnail")
+![Thumbnail](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/C.expected_thumb.jpg?raw=true "Thumbnail")
 
