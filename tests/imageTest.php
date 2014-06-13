@@ -213,6 +213,56 @@ class imageTest extends \PHPUnit_Framework_TestCase {
             unlink($actual_dst);        
         }        
     }
+    
+    public function testDistort() {
+         // prep
+        $src = dirname(__FILE__).'/assets/E.jpg'; 
+        $dst = dirname(__FILE__).'/assets/E.400x100.jpg';
+        if (file_exists($dst)) {
+            unlink($dst);        
+        }
 
+        $this->assertFalse(file_exists($dst));
+              
+        $result = Image::scale($src,$dst,400,100);
+        
+        $this->assertTrue(file_exists($dst));
+        $this->assertEquals($result,$dst);
+        
+        $info = getimagesize($result);
+        $this->assertFalse(empty($info));
+        $this->assertEquals($info[0],400);
+        $this->assertEquals($info[1],100);
+                
+        if (file_exists($dst)) {
+            unlink($dst);        
+        }        
+   
+    }
+
+ 
+     public function testX() {
+        // prep
+        $src = dirname(__FILE__).'/assets/E.jpg'; 
+        $dst = dirname(__FILE__).'/assets/E.100x75.jpg'; 
+        if (file_exists($dst)) {
+            unlink($dst);        
+        }
+
+        $this->assertFalse(file_exists($dst));
+              
+        $result = Image::scale2w($src,$dst,150);
+        
+        $this->assertTrue(file_exists($dst));
+        $this->assertEquals($result,$dst);
+        
+        $info = getimagesize($result);
+        $this->assertFalse(empty($info));
+        $this->assertEquals($info[0],150);
+                
+        if (file_exists($dst)) {
+//            unlink($dst);        
+        } 
+    }
     
 }

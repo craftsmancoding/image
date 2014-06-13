@@ -97,6 +97,21 @@ compatibility with jCrop or other instances when the image is displayed at a siz
 
 WARNING: This function may distort the aspect-ratio of the image.
 
+#### Example: Stretch
+
+    $src = '/path/to/image.jpg'; // e.g. 300x225
+    $dst = '/path/to/stretched.jpg';
+    \Craftsmancoding\Image::scale($src,$dst,400,100);
+
+![Regular Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/E.jpg?raw=true "Regular Image")
+
+Becomes stretched if you are not careful! 
+
+![Thumbnail](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/E.distorted.jpg?raw=true "Distorted Aspect Ratio")
+
+Use `scale2h` or `scale2w` if you are concerned about preserving the aspect ratio.
+
+
 --------------
 
 ### scale2h (Scale to Height)
@@ -120,6 +135,20 @@ The width will be scaled automatically to maintain the original aspect-ratio.
 * **$new_w** : desired width of the new destination image (in pixels)
 
 The height will be scaled automatically to maintain the original aspect-ratio.
+
+    $src = '/path/to/image.jpg'; // e.g. 300x225
+    $dst = '/path/to/stretched.jpg';
+    \Craftsmancoding\Image::scale2w($src,$dst,150);
+
+![Regular Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/E.jpg?raw=true "Regular Image")
+
+The height will be calculated automatically in order to preserve the aspect ratio:
+
+![Width Scaled](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/E.150x112.jpg?raw=true "Correct Aspect Ratio")
+
+
+
+
 
 --------------
 
