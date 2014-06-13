@@ -179,6 +179,7 @@ class Image {
         if (!$src_img) {
             throw new \Exception('Could not read image '.$src); 
         }
+
         if (!file_exists(dirname($dst))) {
             if (!mkdir(dirname($dst),0777,true)) {
                 throw new \Exception('Failed to create directory '.dirname($dst));
@@ -203,6 +204,7 @@ class Image {
             print "$src_x, $src_y, $src_w, $src_h"; exit;
             throw new \Exception('Could not crop image');
         }
+
         // Write the cropped image resource to the filesystem
         if (!$image_func($dst_img,$dst,$quality)) {
             imagedestroy($src_img);
@@ -294,6 +296,13 @@ class Image {
         return self::_create($src_img, $dst, $ox,$oy,$nx,$ny);
     }
 
+    public static function rotateCW($src,$degrees) {  
+        $src_img = self::_get_resource($src);
+        $rotate = imagerotate($src_img, $degrees, 0);
+        imagejpeg($rotate);
+        imagedestroy($src_img);
+        imagedestroy($rotate);
+    }
 
     /** 
      * Generate a thumbnail of dimensions $w x $h from the image at $src, save it to $dst.

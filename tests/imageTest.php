@@ -29,7 +29,7 @@ class imageTest extends \PHPUnit_Framework_TestCase {
      *
      */
     public static function setUpBeforeClass() {        
-
+        require_once dirname(dirname(__FILE__)).'/src/Image.php';
     }
 
 
@@ -103,11 +103,12 @@ class imageTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse(file_exists($dst));
               
         $result = Image::scale2w($src,$dst,222);
-        
+
         $this->assertTrue(file_exists($dst));
         $this->assertEquals($result,$dst);
         
         $info = getimagesize($result);
+
         $this->assertFalse(empty($info));
         $this->assertEquals($info[0],222);
 
@@ -118,7 +119,9 @@ class imageTest extends \PHPUnit_Framework_TestCase {
         if (file_exists($dst)) {
             unlink($dst);        
         } 
+
     }    
+
 
     /**
      * @expectedException        \Exception
@@ -126,6 +129,7 @@ class imageTest extends \PHPUnit_Framework_TestCase {
      */
     public function testCropExceptions() {
         $result = Image::crop('/does/not/exist','ignore',0,0,100,100);
+
     }
 
     /**
@@ -133,7 +137,7 @@ class imageTest extends \PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage file_exists() expects parameter 1 to be a valid path, array given
      */
     public function testCropExceptions2() {
-        $result = Image::crop(array('junk'),'ignore',0,0,100,100);
+        $result = Image::crop('junk','ignore',0,0,100,100);
     }
 
     /**
@@ -178,7 +182,10 @@ class imageTest extends \PHPUnit_Framework_TestCase {
         if (file_exists($result)) {
             unlink($result);        
         }
+
     }
+
+
     
     public function testRealThumb() {
         $src = dirname(__FILE__).'/assets/macbook_pro.jpg'; 
@@ -198,5 +205,6 @@ class imageTest extends \PHPUnit_Framework_TestCase {
         }        
 
     }
+
     
 }
