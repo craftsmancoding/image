@@ -37,24 +37,24 @@ class imageTest extends \PHPUnit_Framework_TestCase {
      * Can we make good thumbnails?
      *
      */
-    public function testThumbnail() {
+    public function testScaleToWidth() {
         // prep
-        $src = dirname(__FILE__).'/assets/support.jpg'; 
-        $dst = dirname($src).'/thumbs/'.basename($src);
+        $src = dirname(__FILE__).'/assets/A.jpg'; 
+        $dst = dirname(__FILE__).'/assets/A.512x410.jpg';
         if (file_exists($dst)) {
             unlink($dst);        
         }
 
         $this->assertFalse(file_exists($dst));
               
-        $result = Image::scale2w($src,$dst,112);
+        $result = Image::scale2w($src,$dst,512);
         
         $this->assertTrue(file_exists($dst));
         $this->assertEquals($result,$dst);
         
         $info = getimagesize($result);
         $this->assertFalse(empty($info));
-        $this->assertEquals($info[0],112);
+        $this->assertEquals($info[0],512);
         
         if (file_exists($dst)) {
             unlink($dst);        
@@ -64,10 +64,10 @@ class imageTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test with a different dimension
      */
-    public function testThumbnail2() {
+    public function testScaleToWidth2() {
         // prep
-        $src = dirname(__FILE__).'/assets/support.jpg'; 
-        $dst = dirname($src).'/thumbs/'.basename($src);
+        $src = dirname(__FILE__).'/assets/B.jpg'; 
+        $dst = dirname(__FILE__).'/assets/B.100x75.jpg'; 
         if (file_exists($dst)) {
             unlink($dst);        
         }
@@ -89,38 +89,7 @@ class imageTest extends \PHPUnit_Framework_TestCase {
     }
 
 
-    /**
-     * Test with yet another dimension and compare signatures
-     */
-    public function testThumbnail3() {
-        // prep
-        $src = dirname(__FILE__).'/assets/support.jpg'; 
-        $dst = dirname($src).'/thumbs/'.basename($src);
-        if (file_exists($dst)) {
-            unlink($dst);        
-        }
-
-        $this->assertFalse(file_exists($dst));
-              
-        $result = Image::scale2w($src,$dst,222);
-
-        $this->assertTrue(file_exists($dst));
-        $this->assertEquals($result,$dst);
-        
-        $info = getimagesize($result);
-
-        $this->assertFalse(empty($info));
-        $this->assertEquals($info[0],222);
-
-        $actual_sig = md5_file($result);
-        $expected_sig = md5_file(dirname(__FILE__).'/assets/222.support.jpg');
-        $this->assertEquals($actual_sig,$expected_sig);
-                
-        if (file_exists($dst)) {
-            unlink($dst);        
-        } 
-
-    }    
+    
 
 
     /**
@@ -134,7 +103,7 @@ class imageTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @expectedException        \Exception
-     * @expectedExceptionMessage file_exists() expects parameter 1 to be a valid path, array given
+     * @expectedExceptionMessage File not found
      */
     public function testCropExceptions2() {
         $result = Image::crop('junk','ignore',0,0,100,100);
@@ -156,7 +125,7 @@ class imageTest extends \PHPUnit_Framework_TestCase {
      * @expectedExceptionMessage Failed to create directory
      */
     public function testCropExceptions4() {
-        $src = dirname(__FILE__).'/assets/support.jpg'; 
+        $src = dirname(__FILE__).'/assets/B.jpg'; 
         $result = Image::crop($src,'/can/not/write/here.jpg',0,0,100,100);
     }
     
@@ -164,19 +133,27 @@ class imageTest extends \PHPUnit_Framework_TestCase {
      *
      *
      */
-    public function testCrop() {
-        $src = dirname(__FILE__).'/assets/macbook_pro.jpg'; 
-        $dst = dirname(__FILE__).'/assets/cropped.macbook_pro.jpg';
+    public function testBasicCrop() {
+        $src = dirname(__FILE__).'/assets/A.jpg'; 
+        $dst = dirname(__FILE__).'/assets/A.expected_topleft.jpg';
         if (file_exists($dst)) {
             unlink($dst);        
         }        
         $x = 0;
         $y = 0;
-        $w = 640;
-        $h = 478;
+        $w = 512;
+        $h = 410;
         $result = Image::crop($src,$dst,$x,$y,$w,$h);
+
+        // Test height and width
+        $info = getimagesize($result);
+        $this->assertFalse(empty($info));
+        $this->assertEquals($info[0],512);
+        $this->assertEquals($info[1],410);
+
+        // Test signature
         $actual_sig = md5_file($result);
-        $expected_sig = md5_file(dirname(__FILE__).'/assets/topleft.macbook_pro.jpg');
+        $expected_sig = md5_file(dirname(__FILE__).'/assets/A.topleft.jpg');
         $this->assertEquals($actual_sig,$expected_sig);
         
         if (file_exists($result)) {
@@ -187,23 +164,54 @@ class imageTest extends \PHPUnit_Framework_TestCase {
 
 
     
-    public function testRealThumb() {
-        $src = dirname(__FILE__).'/assets/macbook_pro.jpg'; 
-        $dst = dirname(__FILE__).'/assets/thumb.macbook_pro.jpg';
-        $actual_dst = dirname(__FILE__).'/assets/thumb2.macbook_pro.jpg';
-        $tmp = 'thumb.macbook_pro.jpg';
-        if (file_exists($dst)) {
-            unlink($dst);        
-        }        
-        $result = Image::thumbnail($src,$dst,300,150);
+    public function testThumbnailofTallImage() {
+        $src = dirname(__FILE__).'/assets/C.jpg'; 
+        $expected_dst = dirname(__FILE__).'/assets/C.expected_thumb.jpg';
+        $actual_dst = dirname(__FILE__).'/assets/C.actual_thumb.jpg';
 
+        if (file_exists($actual_dst)) {
+            unlink($actual_dst);        
+        }        
+        $result = Image::thumbnail($src,$actual_dst,200,200);
+        // Test height and width
+        $info = getimagesize($result);
+        $this->assertFalse(empty($info));
+        $this->assertEquals($info[0],200);
+        $this->assertEquals($info[1],200);
+        
+        // Test signature
         $actual_sig = md5_file($actual_dst);
-        $expected_sig = md5_file($dst);
+        $expected_sig = md5_file($expected_dst);
         $this->assertEquals($actual_sig,$expected_sig);
-        if (file_exists($dst)) {
-            unlink($dst);        
+        
+        if (file_exists($actual_dst)) {
+            unlink($actual_dst);        
         }        
+    }
 
+    public function testThumbnailofWideImage() {
+        $src = dirname(__FILE__).'/assets/D.jpg'; 
+        $expected_dst = dirname(__FILE__).'/assets/D.expected_thumb.jpg';
+        $actual_dst = dirname(__FILE__).'/assets/D.actual_thumb.jpg';
+
+        if (file_exists($actual_dst)) {
+            unlink($actual_dst);        
+        }        
+        $result = Image::thumbnail($src,$actual_dst,200,200);
+        // Test height and width
+        $info = getimagesize($result);
+        $this->assertFalse(empty($info));
+        $this->assertEquals($info[0],200);
+        $this->assertEquals($info[1],200);
+        
+        // Test signature
+        $actual_sig = md5_file($actual_dst);
+        $expected_sig = md5_file($expected_dst);
+        $this->assertEquals($actual_sig,$expected_sig);
+        
+        if (file_exists($actual_dst)) {
+            unlink($actual_dst);        
+        }        
     }
 
     

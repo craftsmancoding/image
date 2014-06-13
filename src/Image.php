@@ -181,7 +181,7 @@ class Image {
         }
 
         if (!file_exists(dirname($dst))) {
-            if (!mkdir(dirname($dst),0777,true)) {
+            if (!@mkdir(dirname($dst),0777,true)) {
                 throw new \Exception('Failed to create directory '.dirname($dst));
             }            
         }
@@ -324,7 +324,7 @@ class Image {
      * @param $w integer with of thumbnail in pixels
      * @param $h integer height of thumbnail in pixels
      */
-    public function thumbnail($src,$dst,$w,$h) {
+    public static function thumbnail($src,$dst,$w,$h) {
 
         $w = floor($w);
         $h = floor($h);
