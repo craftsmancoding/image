@@ -78,10 +78,41 @@ persist.  No object oriented stuff here.
 * **$h** : height of crop area (in pixels)
 * **$ratio** : multiplier of actual-width/displayed-width. Useful if the image was displayed less than actual size.
 
+**Output:** full path to destination.
+
 The crop area is specified in X-Y coordinates where 0,0 is located at the top left of the image. Use the `$ratio` attribute for 
 compatibility with jCrop or other instances when the image is displayed at a size other than its actual size.
 
 ### Example
+
+With cropping you need to adjust the parameters to find the area you are looking for.  Libraries like jCrop can be useful for doing
+this visually.
+
+    $x = 600; // from left
+    $y = 300; // from top
+    $w = 250; 
+    $h = 325;
+    \Craftsmancoding\Image::crop($src,$dst,$x,$y,$w,$h);
+
+![Regular Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/A.jpg?raw=true "Regular Image")
+
+Cropped area (250x325):
+
+![Cropped](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/A.cropped.jpg?raw=true "Cropped Area")
+
+### Example: Using a Ratio
+
+The exact same crop as above could be performed using a multiplier `$ratio` of 2:
+
+    $x = 300; // from left
+    $y = 150; // from top
+    $w = 125;
+    $h = 163;
+    $ratio = 2;
+    Image::crop($src,$dst,$x,$y,$w,$h,$ratio);
+
+The `$ratio` multiplier is useful when the image is not displayed at actual size.
+
 
 
 -----------------
@@ -94,6 +125,8 @@ compatibility with jCrop or other instances when the image is displayed at a siz
 * **$dst** : full path to destination image
 * **$new_w** : desired width of the new destination image (in pixels)
 * **$new_h** : desired height of the new destination image (in pixels)
+
+**Output:** full path to destination.
 
 WARNING: This function may distort the aspect-ratio of the image.
 
@@ -122,6 +155,8 @@ Use `scale2h` or `scale2w` if you are concerned about preserving the aspect rati
 * **$dst** : full path to destination image
 * **$new_h** : desired height of the new destination image (in pixels)
 
+**Output:** full path to destination.
+
 The width will be scaled automatically to maintain the original aspect-ratio.
 
 --------------
@@ -133,6 +168,8 @@ The width will be scaled automatically to maintain the original aspect-ratio.
 * **$src** : full path to source image
 * **$dst** : full path to destination image
 * **$new_w** : desired width of the new destination image (in pixels)
+
+**Output:** full path to destination.
 
 The height will be scaled automatically to maintain the original aspect-ratio.
 
@@ -161,10 +198,12 @@ The height will be calculated automatically in order to preserve the aspect rati
 * **$w** : width of thumbnail (in pixels)
 * **$h** : height of thumbnail (in pixels)
 
-The `thumbnail` function will perform a zoom operation and center on the axis which requires cropping.
+**Output:** full path to destination.
+
+The `thumbnail` function will perform a zoom and crop operation to best fit the thumb.  For more control, use the `crop` function.
 
 
-#### Example: Wide Image
+#### Example: Thumbnail of Wide Image
 
     $src = '/path/to/wide.jpg';
     $dst = '/path/to/wide.thumb.jpg';
@@ -177,7 +216,7 @@ Becomes horizontally centered:
 ![Thumbnail](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.expected_thumb.jpg?raw=true "Thumbnail")
 
 
-#### Example: Tall Image
+#### Example: Thumbnail of Tall Image
 
     $src = '/path/to/tall.jpg';
     $dst = '/path/to/tall.thumb.jpg';

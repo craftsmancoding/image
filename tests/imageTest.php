@@ -241,28 +241,24 @@ class imageTest extends \PHPUnit_Framework_TestCase {
     }
 
  
+/*
      public function testX() {
-        // prep
-        $src = dirname(__FILE__).'/assets/E.jpg'; 
-        $dst = dirname(__FILE__).'/assets/E.100x75.jpg'; 
+        $src = dirname(__FILE__).'/assets/A.jpg'; 
+        $dst = dirname(__FILE__).'/assets/A.crop2.jpg';
         if (file_exists($dst)) {
             unlink($dst);        
-        }
+        }        
+        $x = 300; // from left
+        $y = 150; // from top
+        $w = 125;
+        $h = 163;
+        $result = Image::crop($src,$dst,$x,$y,$w,$h,2);
 
-        $this->assertFalse(file_exists($dst));
-              
-        $result = Image::scale2w($src,$dst,150);
         
-        $this->assertTrue(file_exists($dst));
-        $this->assertEquals($result,$dst);
-        
-        $info = getimagesize($result);
-        $this->assertFalse(empty($info));
-        $this->assertEquals($info[0],150);
-                
-        if (file_exists($dst)) {
-//            unlink($dst);        
-        } 
+        if (file_exists($result)) {
+//            unlink($result);        
+        }
     }
+*/
     
 }
