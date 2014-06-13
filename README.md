@@ -59,7 +59,7 @@ If you are using namespaces (e.g. inside a class), the calls might look like thi
     
 --------------------
 
-## Usage
+## Syntax
 
 All the functions in this library class are meant to be called statically -- no instantiation is required and no class variables
 persist.  No object oriented stuff here.
@@ -70,14 +70,17 @@ persist.  No object oriented stuff here.
 
 * **$src** : full path to source image
 * **$dst** : full path to destination
-* **$x* : x-coordinate for start of crop area (0 = left)
-* **$y* : y-coordinate for start of crop area (0 = top)
-* **$w* : width of crop area (in pixels)
-* **$h* : height of crop area (in pixels)
+* **$x** : x-coordinate for start of crop area (0 = left)
+* **$y** : y-coordinate for start of crop area (0 = top)
+* **$w** : width of crop area (in pixels)
+* **$h** : height of crop area (in pixels)
 * **$ratio** : multiplier of actual-width/displayed-width. Useful if the image was displayed less than actual size.
 
 The crop area is specified in X-Y coordinates where 0,0 is located at the top left of the image. Use the `$ratio` attribute for 
 compatibility with jCrop or other instances when the image is displayed at a size other than its actual size.
+
+### Example
+
 
 
 
@@ -87,8 +90,8 @@ compatibility with jCrop or other instances when the image is displayed at a siz
 
 * **$src** : full path to source image
 * **$dst** : full path to destination image
-* **$new_w* : desired width of the new destination image (in pixels)
-* **$new_h* : desired height of the new destination image (in pixels)
+* **$new_w** : desired width of the new destination image (in pixels)
+* **$new_h** : desired height of the new destination image (in pixels)
 
 WARNING: This function may distort the aspect-ratio of the image.
 
@@ -99,7 +102,7 @@ WARNING: This function may distort the aspect-ratio of the image.
 
 * **$src** : full path to source image
 * **$dst** : full path to destination image
-* **$new_h* : desired height of the new destination image (in pixels)
+* **$new_h** : desired height of the new destination image (in pixels)
 
 The width will be scaled automatically to maintain the original aspect-ratio.
 
@@ -110,6 +113,28 @@ The width will be scaled automatically to maintain the original aspect-ratio.
 
 * **$src** : full path to source image
 * **$dst** : full path to destination image
-* **$new_w* : desired width of the new destination image (in pixels)
+* **$new_w** : desired width of the new destination image (in pixels)
 
 The height will be scaled automatically to maintain the original aspect-ratio.
+
+### Generate Thumbnail (thumbnail)
+
+**Syntax:** `thumbnail(string $src, string $dst, int $w, int $h)`
+
+* **$src** : full path to source image
+* **$dst** : full path to destination image
+* **$w** : width of thumbnail (in pixels)
+* **$h** : height of thumbnail (in pixels)
+
+The `thumbnail` function will perform a zoom operation and center on the axis which requires cropping.
+
+
+#### Example: Tall Image
+
+    $src = '/path/to/tall.jpg';
+    $dst = '/path/to/tall.thumb.jpg';
+    \Craftsmancoding\Image::thumbnail($src,$dst,200,200);
+
+https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.jpg
+
+https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.expected_thumb.jpg
