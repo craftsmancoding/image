@@ -135,6 +135,8 @@ The `thumbnail` function will perform a zoom operation and center on the axis wh
     $dst = '/path/to/tall.thumb.jpg';
     \Craftsmancoding\Image::thumbnail($src,$dst,200,200);
 
-![Tall Image](/craftsmancoding/image/master/tests/assets/D.jpg?raw=true "Tall Image")
+![Tall Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.jpg?raw=true "Tall Image")
 
-![Thumbnail](/craftsmancoding/image/master/tests/assets/D.expected_thumb.jpg?raw=true "Thumbnail")
+Becomes vertically centered:
+
+![Thumbnail](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.expected_thumb.jpg?raw=true "Thumbnail")
