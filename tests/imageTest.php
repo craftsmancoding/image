@@ -130,7 +130,7 @@ class imageTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @expectedException        \Exception
-     * @expectedExceptionMessage File not found
+     * @expectedExceptionMessage file_exists() expects parameter 1 to be a valid path, array given
      */
     public function testCropExceptions2() {
         $result = Image::crop(array('junk'),'ignore',0,0,100,100);
