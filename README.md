@@ -1,7 +1,7 @@
 Image
 =====
 
-Framework agnostic image manipulation library, Imagick not required. Scale and crop images, create thumbnails.
+Framework agnostic image manipulation library, Imagick not required. Scale and crop images, create thumbnails et al...
 
 This library offers a clean interface for using PHP image manipulation functions.  It was created to provide a 
 unified interface between various projects on various platforms and environments (some without Imagick).
@@ -64,6 +64,8 @@ If you are using namespaces (e.g. inside a class), the calls might look like thi
 All the functions in this library class are meant to be called statically -- no instantiation is required and no class variables
 persist.  No object oriented stuff here.
 
+--------------
+
 ### Crop (crop)
 
 **Syntax:** `crop(string $src, string $dst,int $x, int $y,int $w, int $h, number $ratio=1)`
@@ -82,9 +84,9 @@ compatibility with jCrop or other instances when the image is displayed at a siz
 ### Example
 
 
+-----------------
 
-
-### Scale (scale)
+### scale (Scale to given dimensions)
 
 **Syntax:** `scale(string $src, string $dst, int $new_w, int $new_h)`
 
@@ -95,8 +97,9 @@ compatibility with jCrop or other instances when the image is displayed at a siz
 
 WARNING: This function may distort the aspect-ratio of the image.
 
+--------------
 
-### Scale to Height (scale2h)
+### scale2h (Scale to Height)
 
 **Syntax:** `scale2h(string $src, string $dst, int $new_h)`
 
@@ -106,8 +109,9 @@ WARNING: This function may distort the aspect-ratio of the image.
 
 The width will be scaled automatically to maintain the original aspect-ratio.
 
+--------------
 
-### Scale to Width (scale2w)
+### scale2w (Scale to Width)
 
 **Syntax:** `scale2w(string $src, string $dst, int $new_w)`
 
@@ -117,7 +121,9 @@ The width will be scaled automatically to maintain the original aspect-ratio.
 
 The height will be scaled automatically to maintain the original aspect-ratio.
 
-### Generate Thumbnail (thumbnail)
+--------------
+
+### thumbnail
 
 **Syntax:** `thumbnail(string $src, string $dst, int $w, int $h)`
 
@@ -129,14 +135,28 @@ The height will be scaled automatically to maintain the original aspect-ratio.
 The `thumbnail` function will perform a zoom operation and center on the axis which requires cropping.
 
 
+#### Example: Wide Image
+
+    $src = '/path/to/wide.jpg';
+    $dst = '/path/to/wide.thumb.jpg';
+    \Craftsmancoding\Image::thumbnail($src,$dst,200,200);
+
+![Wide Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.jpg?raw=true "Wide Image")
+
+Becomes horizontally centered:
+
+![Thumbnail](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.expected_thumb.jpg?raw=true "Thumbnail")
+
+
 #### Example: Tall Image
 
     $src = '/path/to/tall.jpg';
     $dst = '/path/to/tall.thumb.jpg';
     \Craftsmancoding\Image::thumbnail($src,$dst,200,200);
 
-![Tall Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.jpg?raw=true "Tall Image")
+![Tall Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.jpg?raw=true "Wide Image")
 
 Becomes vertically centered:
 
 ![Thumbnail](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/D.expected_thumb.jpg?raw=true "Thumbnail")
+
