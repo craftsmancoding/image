@@ -94,11 +94,13 @@ this visually.
     $h = 325;
     \Craftsmancoding\Image::crop($src,$dst,$x,$y,$w,$h);
 
+Here's our huge image:
+
 ![Regular Image](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/A.jpg?raw=true "Regular Image")
 
-Cropped area (250x325):
+Cropped to an area of 250x325:
 
-![Cropped](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/A.cropped.jpg?raw=true "Cropped Area")
+![Cropped](https://raw.githubusercontent.com/craftsmancoding/image/master/tests/assets/A.crop.jpg?raw=true "Cropped Area")
 
 ### Example: Using a Ratio
 
