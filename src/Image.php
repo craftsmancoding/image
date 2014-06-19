@@ -296,12 +296,49 @@ class Image {
         return self::_create($src_img, $dst, $ox,$oy,$nx,$ny);
     }
 
+     /**
+     * rotateCW Clockwise
+     *
+     * Throws tantrums if things don't work out its way.
+     *
+     * @param string $src full path to source image
+     * @param int $degrees angle
+     */
     public static function rotateCW($src,$degrees) {  
-        $src_img = self::_get_resource($src);
-        $rotate = imagerotate($src_img, $degrees, 0);
-        imagejpeg($rotate);
+        if (!file_exists($src)) {
+            throw new \Exception('File not found '.$src);
+        }
+        
+        $src_img = '';
+        $ext = strtolower(strrchr($src, '.'));
+        switch ($ext) {
+            case '.jpg':
+            case '.jpeg':
+                $src_img = @imagecreatefromjpeg($src);
+                // Rotate
+                $rotate = imagerotate($src_img, -$degrees, 0);
+                imagejpeg($rotate,$src);
+                break;
+            case '.png':
+                $src_img = @imagecreatefrompng($src);
+                $bgColor = imagecolorallocatealpha($src_img, 255, 255, 255, 127);
+                // Rotate
+                $rotate = imagerotate($src_img, -$degrees, $bgColor);
+                imagesavealpha($rotate, true);
+                imagepng($rotate,$src);
+                break;
+        }
+        
+        if (!$src_img) {
+            throw new \Exception('Could not read image '.$src); 
+        }
+
+
+        // Free the memory
         imagedestroy($src_img);
         imagedestroy($rotate);
+
+        return $src;
     }
 
     /** 

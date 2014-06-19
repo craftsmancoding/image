@@ -240,6 +240,17 @@ class imageTest extends \PHPUnit_Framework_TestCase {
    
     }
 
+
+    public function testRotateCW() {
+         // prep
+        $src = dirname(__FILE__).'/assets/rotate90.jpg';   
+        $info_before = getimagesize($src);  
+        $result = Image::rotateCW($src,90);
+        $this->assertTrue(file_exists($src));
+        $this->assertEquals($result,$src);
+        $info_after = getimagesize($result);
+        $this->assertNotEquals($info_before[3],$info_after[3]);
+    }
  
 /*
      public function testX() {
