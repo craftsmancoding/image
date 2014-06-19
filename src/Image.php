@@ -304,11 +304,15 @@ class Image {
      * @param string $src full path to source image
      * @param int $degrees angle
      */
-    public static function rotateCW($src,$degrees) {  
+    public static function rotate($src,$degrees,$clockwise=true) {  
         if (!file_exists($src)) {
             throw new \Exception('File not found '.$src);
         }
         
+        if($clockwise) {
+            $degrees = -$degrees;
+        }
+
         $src_img = '';
         $ext = strtolower(strrchr($src, '.'));
         switch ($ext) {
@@ -316,14 +320,14 @@ class Image {
             case '.jpeg':
                 $src_img = @imagecreatefromjpeg($src);
                 // Rotate
-                $rotate = imagerotate($src_img, -$degrees, 0);
+                $rotate = imagerotate($src_img, $degrees, 0);
                 imagejpeg($rotate,$src);
                 break;
             case '.png':
                 $src_img = @imagecreatefrompng($src);
                 $bgColor = imagecolorallocatealpha($src_img, 255, 255, 255, 127);
                 // Rotate
-                $rotate = imagerotate($src_img, -$degrees, $bgColor);
+                $rotate = imagerotate($src_img, $degrees, $bgColor);
                 imagesavealpha($rotate, true);
                 imagepng($rotate,$src);
                 break;
