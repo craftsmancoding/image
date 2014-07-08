@@ -86,10 +86,14 @@ class Image {
         $dst_img = imagecreatetruecolor($nx, $ny);
         
         $ext = strtolower(strrchr($dst, '.'));
+
         // Special behavior for PNGs
         if ($ext=='.png') {
+
                 // integer representation of the color black (rgb: 0,0,0)
-                $background = imagecolorallocate($dst_img, 0, 0, 0);
+
+             $background = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+        
                 // removing the black from the placeholder
                 imagecolortransparent($dst_img, $background);
 

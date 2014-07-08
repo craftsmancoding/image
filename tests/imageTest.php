@@ -39,8 +39,8 @@ class imageTest extends \PHPUnit_Framework_TestCase {
      */
     public function testScaleToWidth() {
         // prep
-        $src = dirname(__FILE__).'/assets/A.jpg'; 
-        $dst = dirname(__FILE__).'/assets/A.512x410.jpg';
+        $src = dirname(__FILE__).'/assets/A.png'; 
+        $dst = dirname(__FILE__).'/assets/A.512x410.png';
         if (file_exists($dst)) {
             unlink($dst);        
         }
