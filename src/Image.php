@@ -60,6 +60,7 @@ class Image {
                 $src_img = @imagecreatefromgif($src);
                 break;
             case '.png':
+
                 $src_img = @imagecreatefrompng($src);
                 break;
         }
@@ -93,7 +94,7 @@ class Image {
                 // integer representation of the color black (rgb: 0,0,0)
 
              $background = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
-        
+
                 // removing the black from the placeholder
                 imagecolortransparent($dst_img, $background);
 
@@ -124,7 +125,7 @@ class Image {
                 }
                 break;
             case '.png':
-                if(!imagepng($dst_img, $dst,0)) {
+                if(!imagepng($dst_img, $dst)) {
                     throw new \Exception('Failed to create thumbnail image at '.$dst);
                 }
                 break;
@@ -201,6 +202,25 @@ class Image {
 
         $dst_img = imagecreatetruecolor($src_w, $src_h);
 
+        if ($ext=='.png') {
+
+
+                // integer representation of the color black (rgb: 0,0,0)
+                $background = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+
+                // removing the black from the placeholder
+                imagecolortransparent($dst_img, $background);
+
+                // turning off alpha blending (to ensure alpha channel information 
+                // is preserved, rather than removed (blending with the rest of the 
+                // image in the form of black))
+                imagealphablending($dst_img, false);
+
+                // turning on alpha channel information saving (to ensure the full range 
+                // of transparency is preserved)
+                imagesavealpha($dst_img, true);
+        }
+        
         // The un-aptly named: imagecopy: Copy part of src image to dst img defined by points on the src
         if (!imagecopy($dst_img, $src_img, 0, 0, $src_x, $src_y, $src_w, $src_h)) {
             imagedestroy($src_img);

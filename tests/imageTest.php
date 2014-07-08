@@ -32,7 +32,6 @@ class imageTest extends \PHPUnit_Framework_TestCase {
         require_once dirname(dirname(__FILE__)).'/src/Image.php';
     }
 
-
     /**
      * Can we make good thumbnails?
      *
@@ -58,7 +57,8 @@ class imageTest extends \PHPUnit_Framework_TestCase {
         
         if (file_exists($dst)) {
             unlink($dst);        
-        }        
+        }     
+        die();  
     }
 
     /**
