@@ -71,14 +71,14 @@ persist.  No object oriented stuff here.
 **Syntax:** `crop(string $src, string $dst,int $x, int $y,int $w, int $h, number $ratio=1)`
 
 * **$src** : full path to source image
-* **$dst** : full path to destination
+* **$dst** : destination (full path) where you want to create the cropped image
 * **$x** : x-coordinate for start of crop area (0 = left)
 * **$y** : y-coordinate for start of crop area (0 = top)
 * **$w** : width of crop area (in pixels)
 * **$h** : height of crop area (in pixels)
 * **$ratio** : multiplier of actual-width/displayed-width. Useful if the image was displayed less than actual size.
 
-**Output:** full path to destination.
+**Output:** full path to cropped image (i.e. the destination).
 
 The crop area is specified in X-Y coordinates where 0,0 is located at the top left of the image. Use the `$ratio` attribute for 
 compatibility with jCrop or other instances when the image is displayed at a size other than its actual size.
@@ -124,7 +124,7 @@ The `$ratio` multiplier is useful when the image is not displayed at actual size
 **Syntax:** `scale(string $src, string $dst, int $new_w, int $new_h)`
 
 * **$src** : full path to source image
-* **$dst** : full path to destination image
+* **$dst** : destination (full path) to where you want to save the scaled image
 * **$new_w** : desired width of the new destination image (in pixels)
 * **$new_h** : desired height of the new destination image (in pixels)
 
@@ -154,7 +154,7 @@ Use `scale2h` or `scale2w` if you are concerned about preserving the aspect rati
 **Syntax:** `scale2h(string $src, string $dst, int $new_h)`
 
 * **$src** : full path to source image
-* **$dst** : full path to destination image
+* **$dst** : destination (full path) to where you want to save the scaled image
 * **$new_h** : desired height of the new destination image (in pixels)
 
 **Output:** full path to destination.
@@ -168,7 +168,7 @@ The width will be scaled automatically to maintain the original aspect-ratio.
 **Syntax:** `scale2w(string $src, string $dst, int $new_w)`
 
 * **$src** : full path to source image
-* **$dst** : full path to destination image
+* **$dst** : destination (full path) to where you want to save the scaled image
 * **$new_w** : desired width of the new destination image (in pixels)
 
 **Output:** full path to destination.
@@ -196,7 +196,7 @@ The height will be calculated automatically in order to preserve the aspect rati
 **Syntax:** `thumbnail(string $src, string $dst, int $w, int $h)`
 
 * **$src** : full path to source image
-* **$dst** : full path to destination image
+* **$dst** : destination (full path) to where you want to save the thumbnail
 * **$w** : width of thumbnail (in pixels)
 * **$h** : height of thumbnail (in pixels)
 
