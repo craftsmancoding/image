@@ -109,7 +109,7 @@ class Image {
         } 
 
         
-        imagecopyresized($dst_img, $src_img, 0,0,0,0,$nx,$ny,$ox,$oy);
+        imagecopyresampled($dst_img, $src_img, 0,0,0,0,$nx,$ny,$ox,$oy);
         
 
         switch ($ext) {
